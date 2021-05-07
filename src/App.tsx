@@ -1,11 +1,8 @@
-// @ts-ignore
 import React from 'react';
-import './App.scss';
-import Library from "./views/Library";
+import Client from "./Client";
 
 const App: React.FC =() => {
-  // @ts-ignore
-  return <Library/>
+  return <Client/>
 };
 
 export default App;

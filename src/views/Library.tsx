@@ -1,9 +1,8 @@
-// @ts-ignore
-import React from 'react';
+import React from "react";
+import Welcome from '../components/Welcome';
 
-const Library: React.FC = ()=> {
-    // @ts-ignore
-    return <p>lib-g</p>
+const Library: React.FC = () => {
+    return <Welcome/>
 };
 
 export default Library;
