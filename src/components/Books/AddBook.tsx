@@ -1,20 +1,15 @@
-import React from 'react';
-import FeatherIcon from 'feather-icons-react';
-import {Col,Row, Container} from "react-bootstrap";
+import React from "react";
+import {Plus} from "react-feather";
 
 
 
-const AddBook: React.FC =() => {
-    return (
-        <div className='addBook'>
-            <Row >
-                <Col md={4} className='px-0'> <FeatherIcon icon="plus"  size="20" className="plusIcon"/>Add Book</Col>
-
-            </Row>
-
+const AddBook: React.FC = () =>{
+    return(
+        <div className='add-book my-2'>
+            <i> <Plus size='1.6em'/></i>
+            <label className='mx-2'>Add Book</label>
         </div>
-
-    );
-};
+    )
+}
 
 export default AddBook;
