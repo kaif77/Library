@@ -5,6 +5,11 @@ import AuthorList from "./Author/AuthorList";
 import AddAuthor from "./Author/AddAuthor";
 import CreateAuthor from "./Author/CreateAuthor";
 
+import BookTitle from "./Books/BookTitle";
+import BooksList from "./Books/BooksList";
+import AddBook from "./Books/AddBook";
+import CreateBooks from "./Books/CreateBooks";
+
 
 const LibraryContent : React.FC =()=>{
     const [formVisible,setFormVisibility] = useState(false);
@@ -19,7 +24,12 @@ const LibraryContent : React.FC =()=>{
 
     return(
        <Row className='library-content'>
-           <Col xs={12} md={6}>Books</Col>
+           <Col xs={12} md={6}>
+            <BookTitle/>
+               <BooksList/>
+               <AddBook/>
+               <CreateBooks/>
+           </Col>
            <Col xs={12} md={6} className='author'>
                <AuthorTitle />
                <AuthorList />
