@@ -1,6 +1,3 @@
-export interface Authors{
-    name:string
-}
-export interface Authors{
+export interface IAuthors{
     name:string
 }

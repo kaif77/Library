@@ -1,11 +1,13 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
 import {Trash2,Edit} from 'react-feather';
-import {Authors} from "../../types/LibraryTypes";
+import {IAuthors} from "../../types/LibraryTypes";
 
 type AuthorProps = {
-    author : Authors,
+    author : IAuthors,
     index:number
+    onAuthorDeleted: (authorIndex:number) => void
+    onUpdateRequest: (authorIndex:number) => void
 }
 
 const Author : React.FC<AuthorProps> = (props) => {
@@ -13,16 +15,20 @@ const Author : React.FC<AuthorProps> = (props) => {
 
     return(
         <li className='py-2'>
-        <Row>
-            <Col xs={10}>
-              <label>{index}. {author.name}</label>
-            </Col>
+            <Row>
+                <Col xs={10}>
+                    <label>{index}. {author.name}</label>
+                </Col>
 
-            <Col xs={2} className='author-icons'>
-                <i> <Edit className='text-warning'/> </i>
-                <i><Trash2 className='text-danger mx-2'/> </i>
-            </Col>
-        </Row>
+                <Col xs={2} className='author-icons'>
+                    <i
+                        onClick={ () => props.onUpdateRequest(index -1)}
+                    > <Edit className='text-warning'/> </i>
+                    <i
+                        onClick={()=> props.onAuthorDeleted(index - 1)}
+                    ><Trash2 className='text-danger mx-2'/> </i>
+                </Col>
+            </Row>
         </li>
     );
 }
