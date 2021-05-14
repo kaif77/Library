@@ -1,18 +1,27 @@
-import React, {useState} from "react";
+import React from "react";
 import {Col, Row} from "react-bootstrap";
 import Author from "./Author";
-import {Authors} from "../../types/LibraryTypes";
+import {IAuthors} from "../../types/LibraryTypes";
 
-const AuthorList : React.FC = () => {
-    const authorsList: Authors [] = [{name:'Author 1'},{name:'Author 2'},{name:'Author 3'}];
-    // const authors: Authors [] = [];
-    const [authors,setAuthor] = useState(authorsList);
+type AuthorsListProps = {
+    authors: IAuthors[]
+    onAuthorDeleted: (authorIndex:number) => void
+    onUpdateRequest: (authorIndex:number) => void
+}
+
+const AuthorList : React.FC<AuthorsListProps> = (props) => {
+
+    const {authors} = props;
+
     const renderAuthorList = () =>{
         if(authors.length===0){
             return ;
         }
-        return authors.map((author:Authors, index:number)=> {
-            return <Author author={author} key={index} index={index+1}/>
+        return authors.map((author:IAuthors, index:number)=> {
+            return <Author author={author} key={index} index={index+1}
+                           onAuthorDeleted={props.onAuthorDeleted}
+                           onUpdateRequest={props.onUpdateRequest}
+            />
         });
     };
 
@@ -24,7 +33,7 @@ const AuthorList : React.FC = () => {
             </Col>
 
             <ul className='author-ul'>
-               {renderAuthorList()}
+                {renderAuthorList()}
             </ul>
 
         </Row>
