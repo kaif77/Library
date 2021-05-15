@@ -12,6 +12,7 @@ type createAuthorProps = {
 
 const CreateAuthor: React.FC<createAuthorProps>  = (props) => {
     const {authorToUpdate} = props
+
     const [authorName, setAuthorName] = useState<string | null>(null)
 
     useEffect( ()=> {
@@ -70,8 +71,9 @@ const CreateAuthor: React.FC<createAuthorProps>  = (props) => {
                                 <Form.Label>Name of Author</Form.Label>
                                 <Form.Control type="text" placeholder=""
                                               value={authorName ? authorName:''}
-                                onChange={ (event : React.ChangeEvent<HTMLInputElement>) =>
-                                    handleOnAuthorNameChanged(event.target.value)}/>
+                                              onChange={ (event : React.ChangeEvent<HTMLInputElement>) =>
+                                                            handleOnAuthorNameChanged(event.target.value)}
+                                />
                             </Form.Group>
                             <Button className='create-btn mt-3 py-1 px-4' type='submit'>
                                 {authorToUpdate ? 'Update' : 'Create' }
