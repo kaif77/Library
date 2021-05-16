@@ -25,8 +25,11 @@ const LibraryContent : React.FC =()=>{
 
     const handleOnAuthorDeleted = (index: number) => {
         const allAuthors : IAuthors[] = authors.slice();
-        allAuthors.splice(index, 1);
-        setAuthors(allAuthors);
+        const userConfirmation = window.confirm("Delete Author?");
+        if (userConfirmation === true) {
+            allAuthors.splice(index, 1);
+            setAuthors(allAuthors);
+        }
     };
     const handleUpdateAuthor = (updatedAuthor: IAuthors) => {
         const allAuthors: IAuthors[] = authors.slice();

@@ -4,6 +4,8 @@ import AddAuthor from "./AddAuthor";
 import CreateAuthor from "./CreateAuthor";
 import {Col} from "react-bootstrap";
 import {IAuthors} from "../../types/LibraryTypes";
+import {ToastProvider} from "react-toast-notifications";
+import React from "react";
 
 type AuthorsProps = {
     authors: IAuthors[]
@@ -26,11 +28,12 @@ const Authors : React.FC<AuthorsProps> = (props) => {
                         onUpdateRequest={props.onUpdateRequest}
             />
             <AddAuthor addClick={props.onClickAddAuthor}/>
-            {props.formVisible && <CreateAuthor onFormClose={props.onFormClose}
+            {props.formVisible && <ToastProvider> <CreateAuthor onFormClose={props.onFormClose}
                                                 onAuthorAdded={props.onAuthorAdded}
                                                 authorToUpdate={props.authorToUpdate}
                                                 onAuthorUpdated={props.onAuthorUpdated}
-            />}
+                                                                authors={props.authors}
+            /> </ToastProvider>}
         </Col>
     )
 }

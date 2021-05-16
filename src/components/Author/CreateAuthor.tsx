@@ -2,8 +2,10 @@ import React, {FormEvent, useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {XCircle} from "react-feather";
 import {IAuthors} from "../../types/LibraryTypes";
+import { useToasts  } from "react-toast-notifications";
 
 type createAuthorProps = {
+    authors:IAuthors[]
     onFormClose:() => void;
     onAuthorAdded: (author:IAuthors) => void;
     authorToUpdate:IAuthors | null
@@ -15,6 +17,9 @@ const CreateAuthor: React.FC<createAuthorProps>  = (props) => {
 
     const [authorName, setAuthorName] = useState<string | null>(null)
 
+    const {addToast} = useToasts();
+
+
     useEffect( ()=> {
         if(!authorToUpdate) {
             return;
@@ -23,29 +28,41 @@ const CreateAuthor: React.FC<createAuthorProps>  = (props) => {
         setAuthorName(authorToUpdate.name);
     }, [authorToUpdate])
 
+
     const handleOnAuthorNameChanged = (name : string) => {
         setAuthorName(name);
     }
 
-    const handleOnSubmit = (event: FormEvent) => {
+     const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
 
         if(!authorName || authorName === ''){
+            addToast('Author Name is Not Valid',{appearance:'warning',autoDismiss:true});
             return;
         }
 
         if(authorToUpdate) {
-            const updatedAuthor: IAuthors = {...authorToUpdate, name:authorName}
-            props.onAuthorUpdated(updatedAuthor);
-
-            setAuthorName('');
+            const userConfirmation = window.confirm("Update Author Name?");
+            if (userConfirmation === true) {
+                const updatedAuthor: IAuthors = {...authorToUpdate, name:authorName}
+                props.onAuthorUpdated(updatedAuthor);
+                setAuthorName('');
+                addToast("Author created",{appearance:'success',autoDismiss:true});
+            }
             return;
         }
 
         const newAuthor : IAuthors = {name: authorName};
-        props.onAuthorAdded(newAuthor)
+        for(const authorName of props.authors){
+            if(newAuthor.name === authorName.name){
+                addToast("Author Name Already Exists",{appearance:'warning',autoDismiss:true});
+                return;
+            }
+        }
 
-        setAuthorName('');
+            props.onAuthorAdded(newAuthor)
+            addToast("New Author Created",{appearance:'success',autoDismiss:true});
+            setAuthorName('');
     }
 
     return (
@@ -86,7 +103,6 @@ const CreateAuthor: React.FC<createAuthorProps>  = (props) => {
             </Col>
 
         </Row>
-
 
     );
 }
