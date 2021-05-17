@@ -14,13 +14,13 @@ const Book : React.FC <AuthorProps>= (props) => {
     return(
         <li key={props.index} className='py-2'>
             <Row>
-                <Col xs={10}>
+                <Col  xs={8} >
                     <label>{props.index}. {props.book.name}</label>
                 </Col>
 
-                <Col xs={2} className='book-icons'>
+                <Col xs={4} className='book-icons'>
                     <i> <Edit className='text-warning' onClick={() => props.onUpdateRequest(props.index-1)}/> </i>
-                    <i><Trash2 className='text-danger mx-2' onClick={() => props.onBookDeleted(props.index-1)}/> </i>
+                    <i><Trash2 className='text-danger ' onClick={() => props.onBookDeleted(props.index-1)}/> </i>
                 </Col>
             </Row>
         </li>

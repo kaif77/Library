@@ -72,14 +72,14 @@ const CreateBook: React.FC<BooksProps> = (props) => {
 
     return (
         <Row className='create-book mx-3 my-4'>
-            <Col xs={12} md={8}>
+            <Col xs={12} md={10} lg={8}>
                 <Row>
 
                     <Col xs={10}>
                         <h3>{ props.bookToUpdate ? "Update Book": "Create Book" }</h3>
                     </Col>
 
-                    <Col xs={2}>
+                    <Col xs={2} className='formCloseButton'>
                         <i onClick={props.handleOnFormClose}><XCircle/></i>
                     </Col>
 
@@ -88,7 +88,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                 <Row>
 
                     <Col className='my-4'>
-                        <Form className='mx-5' onSubmit={handleOnSubmit}>
+                        <Form className='formInputs' onSubmit={handleOnSubmit}>
                             <Form.Group controlId="bookName">
                                 <Form.Label>Title of the Book</Form.Label>
                                 <Form.Control type="text"

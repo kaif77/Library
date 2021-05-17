@@ -58,7 +58,7 @@ const LibraryContent : React.FC =()=>{
 
     return(
         <Row className='library-content'>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={6} className='bookSection'>
 
                 <Books authors={authors}/>
             </Col>
