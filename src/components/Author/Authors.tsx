@@ -4,23 +4,24 @@ import AddAuthor from "./AddAuthor";
 import CreateAuthor from "./CreateAuthor";
 import {Col} from "react-bootstrap";
 import {IAuthors} from "../../types/LibraryTypes";
+import React from "react";
 
 type AuthorsProps = {
     authors: IAuthors[]
-    onAuthorDeleted: (authorIndex:number) => void
-    onUpdateRequest: (authorIndex:number) => void
+    onAuthorDeleted: (authorIndex: number) => void
+    onUpdateRequest: (authorIndex: number) => void
     onClickAddAuthor: () => void
     onAuthorUpdated: (updatedAuthor: IAuthors) => void;
-    authorToUpdate:IAuthors | null
-    formVisible:boolean
-    onAuthorAdded: (author:IAuthors) => void;
-    onFormClose:() => void;
+    authorToUpdate: IAuthors | null
+    formVisible: boolean
+    onAuthorAdded: (author: IAuthors) => void;
+    onFormClose: () => void;
 }
 
-const Authors : React.FC<AuthorsProps> = (props) => {
+const Authors: React.FC<AuthorsProps> = (props) => {
     return (
         <Col xs={12} md={6} className='author'>
-            <AuthorTitle />
+            <AuthorTitle/>
             <AuthorList authors={props.authors}
                         onAuthorDeleted={props.onAuthorDeleted}
                         onUpdateRequest={props.onUpdateRequest}
