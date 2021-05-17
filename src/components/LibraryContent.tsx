@@ -3,38 +3,40 @@ import Authors from "./Author/Authors";
 import {IAuthors} from "../types/LibraryTypes";
 import React, {useEffect, useState} from "react";
 import Books from "./Books/Books";
+import {useToasts} from "react-toast-notifications";
 
-
-
-const LibraryContent : React.FC =()=>{
-    const authorsList: IAuthors [] = [{name:'Author 1'},{name:'Author 2'},{name:'Author 3'}];
-    const [authors,setAuthors] = useState(authorsList);
+const LibraryContent: React.FC = () => {
+    const authorsList: IAuthors [] = [{name: 'Author 1'}, {name: 'Author 2'}, {name: 'Author 3'}];
+    const [authors, setAuthors] = useState(authorsList);
     const [authorToUpdate, setAuthorToUpdate] = useState<IAuthors | null>(null);
     const [authorToUpdateIndex, setAuthorToUpdateIndex] = useState<number | null>(null)
-    const [formVisible,setFormVisibility] = useState(false);
+    const [formVisible, setFormVisibility] = useState(false)
+    const {addToast} = useToasts();
 
     const handleOnClickAddAuthor = () => {
         setFormVisibility(true);
     }
-    useEffect( () => {
-        if(!authorToUpdate) {
+    useEffect(() => {
+        if (!authorToUpdate) {
             return;
         }
         setFormVisibility(true);
     }, [authorToUpdate]);
 
     const handleOnAuthorDeleted = (index: number) => {
-        const allAuthors : IAuthors[] = authors.slice();
+        const allAuthors: IAuthors[] = authors.slice();
         const userConfirmation = window.confirm("Delete Author?");
         if (userConfirmation === true) {
             allAuthors.splice(index, 1);
             setAuthors(allAuthors);
+            addToast("Author Deleted", {appearance: 'info', autoDismiss: true});
         }
     };
+
     const handleUpdateAuthor = (updatedAuthor: IAuthors) => {
         const allAuthors: IAuthors[] = authors.slice();
 
-        if(authorToUpdateIndex === null) {
+        if (authorToUpdateIndex === null) {
             return;
         }
         allAuthors.splice(authorToUpdateIndex, 1, updatedAuthor);
@@ -43,10 +45,12 @@ const LibraryContent : React.FC =()=>{
         setAuthorToUpdateIndex(null)
         setFormVisibility(false);
     }
-    const handleOnUpdateRequest = (index:number) => {
+
+    const handleOnUpdateRequest = (index: number) => {
         setAuthorToUpdate(authors[index]);
         setAuthorToUpdateIndex(index);
     }
+
     const handleOnFormClose = () => {
         setFormVisibility(false);
         setAuthorToUpdate(null)
@@ -59,7 +63,7 @@ const LibraryContent : React.FC =()=>{
         setAuthors(allAuthors);
     };
 
-    return(
+    return (
         <Row className='library-content'>
             <Col xs={12} md={6}>
 

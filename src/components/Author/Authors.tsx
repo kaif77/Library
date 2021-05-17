@@ -4,36 +4,34 @@ import AddAuthor from "./AddAuthor";
 import CreateAuthor from "./CreateAuthor";
 import {Col} from "react-bootstrap";
 import {IAuthors} from "../../types/LibraryTypes";
-import {ToastProvider} from "react-toast-notifications";
 import React from "react";
 
 type AuthorsProps = {
     authors: IAuthors[]
-    onAuthorDeleted: (authorIndex:number) => void
-    onUpdateRequest: (authorIndex:number) => void
+    onAuthorDeleted: (authorIndex: number) => void
+    onUpdateRequest: (authorIndex: number) => void
     onClickAddAuthor: () => void
     onAuthorUpdated: (updatedAuthor: IAuthors) => void;
-    authorToUpdate:IAuthors | null
-    formVisible:boolean
-    onAuthorAdded: (author:IAuthors) => void;
-    onFormClose:() => void;
+    authorToUpdate: IAuthors | null
+    formVisible: boolean
+    onAuthorAdded: (author: IAuthors) => void;
+    onFormClose: () => void;
 }
 
-const Authors : React.FC<AuthorsProps> = (props) => {
+const Authors: React.FC<AuthorsProps> = (props) => {
     return (
         <Col xs={12} md={6} className='author'>
-            <AuthorTitle />
+            <AuthorTitle/>
             <AuthorList authors={props.authors}
                         onAuthorDeleted={props.onAuthorDeleted}
                         onUpdateRequest={props.onUpdateRequest}
             />
             <AddAuthor addClick={props.onClickAddAuthor}/>
-            {props.formVisible && <ToastProvider> <CreateAuthor onFormClose={props.onFormClose}
+            {props.formVisible && <CreateAuthor onFormClose={props.onFormClose}
                                                 onAuthorAdded={props.onAuthorAdded}
                                                 authorToUpdate={props.authorToUpdate}
                                                 onAuthorUpdated={props.onAuthorUpdated}
-                                                                authors={props.authors}
-            /> </ToastProvider>}
+            />}
         </Col>
     )
 }
