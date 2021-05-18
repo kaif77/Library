@@ -2,7 +2,6 @@ import AuthorTitle from "./AuthorTitle";
 import AuthorList from "./AuthorList";
 import AddAuthor from "./AddAuthor";
 import CreateAuthor from "./CreateAuthor";
-import {Col} from "react-bootstrap";
 import {IAuthors} from "../../types/LibraryTypes";
 import React from "react";
 
@@ -20,7 +19,7 @@ type AuthorsProps = {
 
 const Authors: React.FC<AuthorsProps> = (props) => {
     return (
-        <Col xs={12} md={6} className='author'>
+        < >
             <AuthorTitle/>
             <AuthorList authors={props.authors}
                         onAuthorDeleted={props.onAuthorDeleted}
@@ -32,7 +31,7 @@ const Authors: React.FC<AuthorsProps> = (props) => {
                                                 authorToUpdate={props.authorToUpdate}
                                                 onAuthorUpdated={props.onAuthorUpdated}
             />}
-        </Col>
+        </>
     )
 }
 

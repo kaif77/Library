@@ -65,21 +65,24 @@ const LibraryContent: React.FC = () => {
 
     return (
         <Row className='library-content'>
-            <Col xs={12} md={6} className='bookSection'>
-
+            <Col xs={{ span: 12,order: 2 }}  md={{ span: 6,order: 1 }} className='bookSection'>
                 <Books authors={authors}/>
             </Col>
 
-            <Authors authors={authors}
-                     onAuthorDeleted={handleOnAuthorDeleted}
-                     onUpdateRequest={handleOnUpdateRequest}
-                     onAuthorUpdated={handleUpdateAuthor}
-                     authorToUpdate={authorToUpdate}
-                     formVisible={formVisible}
-                     onAuthorAdded={handleAuthorAdded}
-                     onFormClose={handleOnFormClose}
-                     onClickAddAuthor={handleOnClickAddAuthor}
-            />
+
+            <Col xs={{ span: 12,order: 1 }} md={{ span: 6,order: 1 }} className='authorSection'>
+                <Authors authors={authors}
+                         onAuthorDeleted={handleOnAuthorDeleted}
+                         onUpdateRequest={handleOnUpdateRequest}
+                         onAuthorUpdated={handleUpdateAuthor}
+                         authorToUpdate={authorToUpdate}
+                         formVisible={formVisible}
+                         onAuthorAdded={handleAuthorAdded}
+                         onFormClose={handleOnFormClose}
+                         onClickAddAuthor={handleOnClickAddAuthor}
+                />
+            </Col>
+
         </Row>
     )
 }

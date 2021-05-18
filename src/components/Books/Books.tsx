@@ -4,7 +4,7 @@ import BooksList from "./BooksList";
 import AddBook from "./AddBook";
 import CreateBooks from "./CreateBooks";
 import { IAuthors, IBooks } from "../../types/LibraryTypes";
-import PopUp from "../PopUp";
+import {useToasts} from "react-toast-notifications";
 
 type BooksProps = {
     authors: IAuthors[]
@@ -20,21 +20,8 @@ const Books: React.FC<BooksProps> = (props) => {
     const [books, setBooks] = useState(bookList);
     const [formVisible, setFormVisibility] = useState<false | true>(false);
     const [bookToUpdate, setBookToUpdate] = useState<IBooks | null>(null);
-    const [bookToUpdateIndex, setBookToUpdateIndex] = useState<number | null>(null)
-    const [modelVisible, setModelVisible] = useState<false | true>(false)
-    const [bookCreatedUpdatedDeleting, setNewBookCreatedUpdatedDeleting,] = useState<IBooks | null>(null)
-    const [deletingBookIndex, setDeletingBookIndex] = useState<number | null>(null)
-    const [modelDetails, setModelDetails] = useState<any>({ header: '', book: '', confirmButton: false })
-
-
-    useEffect(() => {
-        if (!bookCreatedUpdatedDeleting) {
-            setModelVisible(false);
-            return;
-        } else {
-            setModelVisible(true);
-        }
-    }, [bookCreatedUpdatedDeleting]);
+    const [bookToUpdateIndex, setBookToUpdateIndex] = useState<number | null>(null);
+    const {addToast} = useToasts();
 
     const handleOnFormOpen = () => {
         setBookToUpdateIndex(null);
@@ -42,50 +29,40 @@ const Books: React.FC<BooksProps> = (props) => {
         if (!formVisible) {
             setFormVisibility(true);
         }
-
     }
     const handleOnFormClose = () => {
         setFormVisibility(false);
+        setBookToUpdate(null);
+        setBookToUpdateIndex(null);
     }
     const handleBookAdded = (name: string, isbn: string, author: string) => {
         const newBook: IBooks = { name, isbn, author };
         setBooks([...books, newBook]);
-
-        setNewBookCreatedUpdatedDeleting(newBook);
-        setModelDetails({ header: 'successfully created new book:', book: newBook, confirmButton: false });
-
+        addToast("New Book Created", {appearance: 'success', autoDismiss: true});
     }
     const deleteBook = (index: number | null) => {
-
+        const userConfirmation = window.confirm("Delete Author?");
         if (index === null) {
             return;
         }
-        if (bookToUpdateIndex === index) {
-            setBookToUpdateIndex(null);
-            setBookToUpdate(null);
+        if(userConfirmation === true) {
+            const allBooks: IBooks[] = books.slice();
+            allBooks.splice(index, 1);
+            setBooks(allBooks);
+            addToast("Book Deleted", {appearance: 'info', autoDismiss: true});
+            if(bookToUpdateIndex){
+                if(bookToUpdateIndex>index){
+                    setBookToUpdateIndex(bookToUpdateIndex-1);
+                }
+            }
+            if (bookToUpdateIndex === index) {
+                setBookToUpdateIndex(null);
+                setBookToUpdate(null);
+                setFormVisibility(false);
+
+            }
         }
-
-        const allBooks: IBooks[] = books.slice();
-        allBooks.splice(index, 1);
-        setBooks(allBooks);
-        setNewBookCreatedUpdatedDeleting(null);
-        setDeletingBookIndex(null);
-
     }
-    const HandleOnBookDeleted = (index: number) => {
-        setNewBookCreatedUpdatedDeleting(books[index]);
-        setModelDetails({ header: 'Are you sure you want to delete :', book: books[index], confirmButton: true });
-        setDeletingBookIndex(index);
-    }
-    const handleOnClickOk = () => {
-
-        setNewBookCreatedUpdatedDeleting(null);
-        setDeletingBookIndex(null);
-        setModelDetails(null);
-        setDeletingBookIndex(null);
-        setModelVisible(false);
-    }
-
     const HandleOnUpdateRequest = (bookIndex: number) => {
         setBookToUpdate(books[bookIndex]);
         setBookToUpdateIndex(bookIndex);
@@ -98,26 +75,26 @@ const Books: React.FC<BooksProps> = (props) => {
     }, [bookToUpdate]);
 
     const handleUpdatedBook = (updatedBook: IBooks) => {
+        const userConfirmation = window.confirm("Update Author?");
         const allBooks: IBooks[] = books.slice();
-
         if (bookToUpdateIndex === null) {
             return;
         }
-        allBooks.splice(bookToUpdateIndex, 1, updatedBook);
-        setBooks(allBooks);
-        setBookToUpdate(null)
-        setBookToUpdateIndex(null)
-        setFormVisibility(false);
-        setNewBookCreatedUpdatedDeleting(updatedBook);
-        setModelDetails({ header: 'Successfully Updated Book:', book: updatedBook, confirmButton: false })
+        if(userConfirmation === true){
+            allBooks.splice(bookToUpdateIndex, 1, updatedBook);
+            setBooks(allBooks);
+            addToast("Book Updated", {appearance: 'success', autoDismiss: true});
+            setBookToUpdate(null);
+            setBookToUpdateIndex(null);
+            setFormVisibility(false);
+        }
     }
-
     return (
         <div>
             <BookTitle />
 
             <BooksList bookList={books}
-                       onBookDeleted={HandleOnBookDeleted}
+                       onBookDeleted={deleteBook}
                        onUpdateRequest={HandleOnUpdateRequest}
 
             />
@@ -129,15 +106,6 @@ const Books: React.FC<BooksProps> = (props) => {
                                          onBookUpdated={handleUpdatedBook}
             />}
 
-
-            {modelVisible ? <PopUp modelHeader={modelDetails.header}
-                                   bookName={modelDetails.book.name}
-                                   newBookCreatedUpdatedDeleting={bookCreatedUpdatedDeleting}
-                                   deletingBookIndex={deletingBookIndex}
-                                   deleteBook={deleteBook}
-                                   handleOnClickOk={handleOnClickOk}
-
-            /> : ''}
         </div>
     );
 }

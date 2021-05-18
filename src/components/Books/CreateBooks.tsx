@@ -3,6 +3,7 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import {XCircle} from "react-feather";
 import Select from 'react-select/creatable';
 import {IAuthors, AuthorsInDropDown, IBooks} from "../../types/LibraryTypes";
+import {useToasts} from "react-toast-notifications";
 
 
 type BooksProps = {
@@ -11,8 +12,6 @@ type BooksProps = {
     onBookAdded: (name: string, isbn: string, author: string) => void;
     bookToUpdate: IBooks | null;
     onBookUpdated: (bookUpdated: IBooks) => void;
-
-
 }
 const CreateBook: React.FC<BooksProps> = (props) => {
     const {authors} = props;
@@ -21,11 +20,10 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         (author) => {
             return {value: author.name, label: author.name}
         });
-
-
     const [name, setName] = useState<string | null>(null);
     const [isbn, setIsbn] = useState<string | null>(null);
     const [inputAuthor, setAuthor] = useState<null | AuthorsInDropDown>(null);
+    const {addToast} = useToasts();
 
     const handleOnBookNameChanged = (name: string) => {
         setName(name);
@@ -33,23 +31,27 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnIsbnChanged = (isbn: string) => {
         setIsbn(isbn);
     }
-
     const handleOnAuthorChanged = (author: null | AuthorsInDropDown) => {
         setAuthor(author);
     }
     const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
         console.log(inputAuthor ? inputAuthor.value : '');
-        if (!name || !isbn || !inputAuthor || name === "" || isbn === "") {
+        if(!name  || name === ""||!isbn || isbn === ""||!inputAuthor){
+            if (!name  || name === "") {
+                addToast('Book Name is Not Valid', {appearance: 'warning', autoDismiss: true});
+            }
+            if (!isbn || isbn === ""){
+                addToast('ISBN is Not Valid', {appearance: 'warning', autoDismiss: true});
+            }
+            if(!inputAuthor){
+                addToast('Author Name is Not Valid', {appearance: 'warning', autoDismiss: true});
+            }
             return;
         }
         if(props.bookToUpdate) {
-            const updatedBook: IBooks = {...props.bookToUpdate, name:name,isbn:isbn,author:inputAuthor.value}
+            const updatedBook: IBooks = {...props.bookToUpdate, name:name,isbn:isbn,author:inputAuthor.value};
             props.onBookUpdated(updatedBook);
-
-            setName('');
-            setIsbn('');
-            setAuthor(null);
             return;
         }
         props.onBookAdded(name, isbn, inputAuthor.value);
