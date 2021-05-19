@@ -9,8 +9,8 @@ const LibraryContent: React.FC = () => {
     const authorsList: IAuthors [] = [{name: 'Author 1'}, {name: 'Author 2'}, {name: 'Author 3'}];
     const [authors, setAuthors] = useState(authorsList);
     const [authorToUpdate, setAuthorToUpdate] = useState<IAuthors | null>(null);
-    const [authorToUpdateIndex, setAuthorToUpdateIndex] = useState<number | null>(null)
-    const [formVisible, setFormVisibility] = useState(false)
+    const [authorToUpdateIndex, setAuthorToUpdateIndex] = useState<number | null>(null);
+    const [formVisible, setFormVisibility] = useState(false);
     const {addToast} = useToasts();
 
     const handleOnClickAddAuthor = () => {
@@ -53,8 +53,8 @@ const LibraryContent: React.FC = () => {
 
     const handleOnFormClose = () => {
         setFormVisibility(false);
-        setAuthorToUpdate(null)
-        setAuthorToUpdateIndex(null)
+        setAuthorToUpdate(null);
+        setAuthorToUpdateIndex(null);
     }
 
     const handleAuthorAdded = (author: IAuthors) => {
@@ -65,12 +65,12 @@ const LibraryContent: React.FC = () => {
 
     return (
         <Row className='library-content'>
-            <Col xs={{ span: 12,order: 2 }}  md={{ span: 6,order: 1 }} className='bookSection'>
+            <Col xs={{span: 12, order: 2}} md={{span: 6, order: 1}} className='bookSection'>
                 <Books authors={authors}/>
             </Col>
 
 
-            <Col xs={{ span: 12,order: 1 }} md={{ span: 6,order: 1 }} className='authorSection'>
+            <Col xs={{span: 12, order: 1}} md={{span: 6, order: 1}} className='authorSection'>
                 <Authors authors={authors}
                          onAuthorDeleted={handleOnAuthorDeleted}
                          onUpdateRequest={handleOnUpdateRequest}

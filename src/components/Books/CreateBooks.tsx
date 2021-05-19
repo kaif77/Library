@@ -9,9 +9,9 @@ import {useToasts} from "react-toast-notifications";
 type BooksProps = {
     authors: IAuthors[]
     handleOnFormClose: () => void
-    onBookAdded: (name: string, isbn: string, author: string) => void;
-    bookToUpdate: IBooks | null;
-    onBookUpdated: (bookUpdated: IBooks) => void;
+    onBookAdded: (name: string, isbn: string, author: string) => void
+    bookToUpdate: IBooks | null
+    onBookUpdated: (bookUpdated: IBooks) => void
 }
 const CreateBook: React.FC<BooksProps> = (props) => {
     const {authors} = props;
@@ -36,21 +36,21 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     }
     const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
-        console.log(inputAuthor ? inputAuthor.value : '');
-        if(!name  || name === ""||!isbn || isbn === ""||!inputAuthor){
-            if (!name  || name === "") {
+
+        if (!name || name === "" || !isbn || isbn === "" || !inputAuthor) {
+            if (!name || name === "") {
                 addToast('Book Name is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
-            if (!isbn || isbn === ""){
+            if (!isbn || isbn === "") {
                 addToast('ISBN is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
-            if(!inputAuthor){
+            if (!inputAuthor) {
                 addToast('Author Name is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
             return;
         }
-        if(props.bookToUpdate) {
-            const updatedBook: IBooks = {...props.bookToUpdate, name:name,isbn:isbn,author:inputAuthor.value};
+        if (props.bookToUpdate) {
+            const updatedBook: IBooks = {...props.bookToUpdate, name: name, isbn: isbn, author: inputAuthor.value};
             props.onBookUpdated(updatedBook);
             return;
         }
@@ -59,8 +59,9 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         setIsbn('');
         setAuthor(null);
     }
-    useEffect( ()=> {
-        if(!props.bookToUpdate) {
+
+    useEffect(() => {
+        if (!props.bookToUpdate) {
             setName('');
             setIsbn('');
             setAuthor(null);
@@ -68,7 +69,10 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         }
         setName(props.bookToUpdate.name);
         setIsbn(props.bookToUpdate.isbn);
-        const goingToUpdateAuthor:AuthorsInDropDown={value:props.bookToUpdate.author,label:props.bookToUpdate.author}
+        const goingToUpdateAuthor: AuthorsInDropDown = {
+            value: props.bookToUpdate.author,
+            label: props.bookToUpdate.author
+        }
         setAuthor(goingToUpdateAuthor);
     }, [props.bookToUpdate])
 
@@ -76,19 +80,14 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         <Row className='create-book mx-3 my-4'>
             <Col xs={12} md={10} lg={8}>
                 <Row>
-
                     <Col xs={10}>
-                        <h3>{ props.bookToUpdate ? "Update Book": "Create Book" }</h3>
+                        <h3>{props.bookToUpdate ? "Update Book" : "Create Book"}</h3>
                     </Col>
-
                     <Col xs={2} className='formCloseButton'>
                         <i onClick={props.handleOnFormClose}><XCircle/></i>
                     </Col>
-
                 </Row>
-
                 <Row>
-
                     <Col className='my-4'>
                         <Form className='formInputs' onSubmit={handleOnSubmit}>
                             <Form.Group controlId="bookName">
@@ -115,7 +114,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
 
                                     value={inputAuthor}
                                     onChange={(selected: AuthorsInDropDown | null) => {
-                                              handleOnAuthorChanged(selected)
+                                        handleOnAuthorChanged(selected)
                                     }}
                                     allowCreateWhileLoading
                                     options={authorsOfOptionList}
@@ -124,7 +123,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                     theme={theme => ({
                                         ...theme,
                                         borderRadius: 0,
-                                        borderWidth:2,
+                                        borderWidth: 2,
                                         colors: {
                                             ...theme.colors,
                                             primary25: '#f5f5f5',
@@ -139,26 +138,19 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                         }),
                                         control: base => ({
                                             ...base,
-                                            border:0,
+                                            border: 0,
                                         }),
                                     }}
-
-
-
                                 />
                             </Form.Group>
-
-                            <Button type="submit" className='create-btn mt-3 py-1 px-4'>{ props.bookToUpdate ? "Update" : "Create"}</Button>
+                            <Button type="submit"
+                                    className='create-btn mt-3 py-1 px-4'>{props.bookToUpdate ? "Update" : "Create"}
+                            </Button>
                         </Form>
                     </Col>
-
                 </Row>
-
             </Col>
-
         </Row>
-
-
     );
 }
 

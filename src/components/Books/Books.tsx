@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import BookTitle from "./BookTitle";
 import BooksList from "./BooksList";
 import AddBook from "./AddBook";
 import CreateBooks from "./CreateBooks";
-import { IAuthors, IBooks } from "../../types/LibraryTypes";
+import {IAuthors, IBooks} from "../../types/LibraryTypes";
 import {useToasts} from "react-toast-notifications";
 
 type BooksProps = {
     authors: IAuthors[]
 }
+
 const Books: React.FC<BooksProps> = (props) => {
-    const bookList: IBooks[] = [{ name: 'book 1', isbn: '11', author: 'z' },
+    const bookList: IBooks[] = [{name: 'book 1', isbn: '11', author: 'z'},
         {
             name: 'book 2',
             isbn: '22',
             author: 'y'
-        }, { name: 'book 3', isbn: '33', author: 'x' }];
+        }, {name: 'book 3', isbn: '33', author: 'x'}];
 
     const [books, setBooks] = useState(bookList);
     const [formVisible, setFormVisibility] = useState<false | true>(false);
@@ -30,29 +31,32 @@ const Books: React.FC<BooksProps> = (props) => {
             setFormVisibility(true);
         }
     }
+
     const handleOnFormClose = () => {
         setFormVisibility(false);
         setBookToUpdate(null);
         setBookToUpdateIndex(null);
     }
+
     const handleBookAdded = (name: string, isbn: string, author: string) => {
-        const newBook: IBooks = { name, isbn, author };
+        const newBook: IBooks = {name, isbn, author};
         setBooks([...books, newBook]);
         addToast("New Book Created", {appearance: 'success', autoDismiss: true});
     }
+
     const deleteBook = (index: number | null) => {
         const userConfirmation = window.confirm("Delete Book?");
         if (index === null) {
             return;
         }
-        if(userConfirmation === true) {
+        if (userConfirmation === true) {
             const allBooks: IBooks[] = books.slice();
             allBooks.splice(index, 1);
             setBooks(allBooks);
             addToast("Book Deleted", {appearance: 'info', autoDismiss: true});
-            if(bookToUpdateIndex){
-                if(bookToUpdateIndex>index){
-                    setBookToUpdateIndex(bookToUpdateIndex-1);
+            if (bookToUpdateIndex) {
+                if (bookToUpdateIndex > index) {
+                    setBookToUpdateIndex(bookToUpdateIndex - 1);
                 }
             }
             if (bookToUpdateIndex === index) {
@@ -63,10 +67,12 @@ const Books: React.FC<BooksProps> = (props) => {
             }
         }
     }
+
     const HandleOnUpdateRequest = (bookIndex: number) => {
         setBookToUpdate(books[bookIndex]);
         setBookToUpdateIndex(bookIndex);
     }
+
     useEffect(() => {
         if (!bookToUpdate) {
             return;
@@ -80,7 +86,7 @@ const Books: React.FC<BooksProps> = (props) => {
         if (bookToUpdateIndex === null) {
             return;
         }
-        if(userConfirmation === true){
+        if (userConfirmation === true) {
             allBooks.splice(bookToUpdateIndex, 1, updatedBook);
             setBooks(allBooks);
             addToast("Book Updated", {appearance: 'success', autoDismiss: true});
@@ -91,14 +97,14 @@ const Books: React.FC<BooksProps> = (props) => {
     }
     return (
         <div>
-            <BookTitle />
+            <BookTitle/>
 
             <BooksList bookList={books}
                        onBookDeleted={deleteBook}
                        onUpdateRequest={HandleOnUpdateRequest}
 
             />
-            <AddBook handleOnFormOpen={handleOnFormOpen} />
+            <AddBook handleOnFormOpen={handleOnFormOpen}/>
             {formVisible && <CreateBooks authors={props.authors}
                                          handleOnFormClose={handleOnFormClose}
                                          onBookAdded={handleBookAdded}
