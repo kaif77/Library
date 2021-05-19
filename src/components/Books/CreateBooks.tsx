@@ -3,16 +3,15 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import {XCircle} from "react-feather";
 import Select from 'react-select/creatable';
 import {IAuthors, AuthorsInDropDown, IBooks} from "../../types/LibraryTypes";
+import {useToasts} from "react-toast-notifications";
 
 
 type BooksProps = {
     authors: IAuthors[]
     handleOnFormClose: () => void
-    onBookAdded: (name: string, isbn: string, author: string) => void;
-    bookToUpdate: IBooks | null;
-    onBookUpdated: (bookUpdated: IBooks) => void;
-
-
+    onBookAdded: (name: string, isbn: string, author: string) => void
+    bookToUpdate: IBooks | null
+    onBookUpdated: (bookUpdated: IBooks) => void
 }
 const CreateBook: React.FC<BooksProps> = (props) => {
     const {authors} = props;
@@ -21,11 +20,10 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         (author) => {
             return {value: author.name, label: author.name}
         });
-
-
     const [name, setName] = useState<string | null>(null);
     const [isbn, setIsbn] = useState<string | null>(null);
     const [inputAuthor, setAuthor] = useState<null | AuthorsInDropDown>(null);
+    const {addToast} = useToasts();
 
     const handleOnBookNameChanged = (name: string) => {
         setName(name);
@@ -33,23 +31,27 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnIsbnChanged = (isbn: string) => {
         setIsbn(isbn);
     }
-
     const handleOnAuthorChanged = (author: null | AuthorsInDropDown) => {
         setAuthor(author);
     }
     const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
-        console.log(inputAuthor ? inputAuthor.value : '');
-        if (!name || !isbn || !inputAuthor || name === "" || isbn === "") {
+
+        if (!name || name === "" || !isbn || isbn === "" || !inputAuthor) {
+            if (!name || name === "") {
+                addToast('Book Name is Not Valid', {appearance: 'warning', autoDismiss: true});
+            }
+            if (!isbn || isbn === "") {
+                addToast('ISBN is Not Valid', {appearance: 'warning', autoDismiss: true});
+            }
+            if (!inputAuthor) {
+                addToast('Author Name is Not Valid', {appearance: 'warning', autoDismiss: true});
+            }
             return;
         }
-        if(props.bookToUpdate) {
-            const updatedBook: IBooks = {...props.bookToUpdate, name:name,isbn:isbn,author:inputAuthor.value}
+        if (props.bookToUpdate) {
+            const updatedBook: IBooks = {...props.bookToUpdate, name: name, isbn: isbn, author: inputAuthor.value};
             props.onBookUpdated(updatedBook);
-
-            setName('');
-            setIsbn('');
-            setAuthor(null);
             return;
         }
         props.onBookAdded(name, isbn, inputAuthor.value);
@@ -57,8 +59,9 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         setIsbn('');
         setAuthor(null);
     }
-    useEffect( ()=> {
-        if(!props.bookToUpdate) {
+
+    useEffect(() => {
+        if (!props.bookToUpdate) {
             setName('');
             setIsbn('');
             setAuthor(null);
@@ -66,29 +69,27 @@ const CreateBook: React.FC<BooksProps> = (props) => {
         }
         setName(props.bookToUpdate.name);
         setIsbn(props.bookToUpdate.isbn);
-        const goingToUpdateAuthor:AuthorsInDropDown={value:props.bookToUpdate.author,label:props.bookToUpdate.author}
+        const goingToUpdateAuthor: AuthorsInDropDown = {
+            value: props.bookToUpdate.author,
+            label: props.bookToUpdate.author
+        }
         setAuthor(goingToUpdateAuthor);
     }, [props.bookToUpdate])
 
     return (
         <Row className='create-book mx-3 my-4'>
-            <Col xs={12} md={8}>
+            <Col xs={12} md={10} lg={8}>
                 <Row>
-
                     <Col xs={10}>
-                        <h3>{ props.bookToUpdate ? "Update Book": "Create Book" }</h3>
+                        <h3>{props.bookToUpdate ? "Update Book" : "Create Book"}</h3>
                     </Col>
-
-                    <Col xs={2}>
+                    <Col xs={2} className='formCloseButton'>
                         <i onClick={props.handleOnFormClose}><XCircle/></i>
                     </Col>
-
                 </Row>
-
                 <Row>
-
                     <Col className='my-4'>
-                        <Form className='mx-5' onSubmit={handleOnSubmit}>
+                        <Form className='formInputs' onSubmit={handleOnSubmit}>
                             <Form.Group controlId="bookName">
                                 <Form.Label>Title of the Book</Form.Label>
                                 <Form.Control type="text"
@@ -113,7 +114,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
 
                                     value={inputAuthor}
                                     onChange={(selected: AuthorsInDropDown | null) => {
-                                              handleOnAuthorChanged(selected)
+                                        handleOnAuthorChanged(selected)
                                     }}
                                     allowCreateWhileLoading
                                     options={authorsOfOptionList}
@@ -122,7 +123,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                     theme={theme => ({
                                         ...theme,
                                         borderRadius: 0,
-                                        borderWidth:2,
+                                        borderWidth: 2,
                                         colors: {
                                             ...theme.colors,
                                             primary25: '#f5f5f5',
@@ -137,26 +138,19 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                         }),
                                         control: base => ({
                                             ...base,
-                                            border:0,
+                                            border: 0,
                                         }),
                                     }}
-
-
-
                                 />
                             </Form.Group>
-
-                            <Button type="submit" className='create-btn mt-3 py-1 px-4'>{ props.bookToUpdate ? "Update" : "Create"}</Button>
+                            <Button type="submit"
+                                    className='create-btn mt-3 py-1 px-4'>{props.bookToUpdate ? "Update" : "Create"}
+                            </Button>
                         </Form>
                     </Col>
-
                 </Row>
-
             </Col>
-
         </Row>
-
-
     );
 }
 

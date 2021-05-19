@@ -23,7 +23,6 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         if (!authorToUpdate) {
             return;
         }
-
         setAuthorName(authorToUpdate.name);
     }, [authorToUpdate])
 
@@ -59,15 +58,15 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
 
     return (
         <Row className='create-author mx-3 my-4'>
-            <Col xs={12} md={8}>
+            <Col xs={12} md={10} lg={8}>
                 <Row>
 
                     <Col xs={10}>
                         <h3>{authorToUpdate ? 'Update' : 'Create'} Author</h3>
                     </Col>
 
-                    <Col xs={2}>
-                        <i><XCircle onClick={props.onFormClose}/></i>
+                    <Col xs={2} className='formCloseButton'>
+                        <i><XCircle  onClick={props.onFormClose}/></i>
                     </Col>
 
                 </Row>
@@ -75,7 +74,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
                 <Row>
 
                     <Col className='my-4'>
-                        <Form className='mx-5' onSubmit={handleOnSubmit}>
+                        <Form className='formInputs'  onSubmit={handleOnSubmit}>
                             <Form.Group controlId="authorName">
                                 <Form.Label>Name of Author</Form.Label>
                                 <Form.Control type="text" placeholder=""

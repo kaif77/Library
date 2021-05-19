@@ -16,11 +16,11 @@ const Author : React.FC<AuthorProps> = (props) => {
     return(
         <li className='py-2'>
             <Row>
-                <Col xs={10}>
+                <Col xs={8}>
                     <label>{index}. {author.name}</label>
                 </Col>
 
-                <Col xs={2} className='author-icons'>
+                <Col xs={4} className='author-icons'>
                     <i
                         onClick={ () => props.onUpdateRequest(index -1)}
                     > <Edit className='text-warning'/> </i>
