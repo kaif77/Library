@@ -41,7 +41,7 @@ const Books: React.FC<BooksProps> = (props) => {
         addToast("New Book Created", {appearance: 'success', autoDismiss: true});
     }
     const deleteBook = (index: number | null) => {
-        const userConfirmation = window.confirm("Delete Author?");
+        const userConfirmation = window.confirm("Delete Book?");
         if (index === null) {
             return;
         }
