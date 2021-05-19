@@ -75,7 +75,7 @@ const Books: React.FC<BooksProps> = (props) => {
     }, [bookToUpdate]);
 
     const handleUpdatedBook = (updatedBook: IBooks) => {
-        const userConfirmation = window.confirm("Update Author?");
+        const userConfirmation = window.confirm("Update Book?");
         const allBooks: IBooks[] = books.slice();
         if (bookToUpdateIndex === null) {
             return;
