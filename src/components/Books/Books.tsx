@@ -11,12 +11,12 @@ type BooksProps = {
 }
 
 const Books: React.FC<BooksProps> = (props) => {
-    const bookList: IBooks[] = [{name: 'book 1', isbn: '11', author: 'z'},
+    const bookList: IBooks[] = [{name: 'book 1', price: 250.78, author: 'z'},
         {
             name: 'book 2',
-            isbn: '22',
+            price: 250.78,
             author: 'y'
-        }, {name: 'book 3', isbn: '33', author: 'x'}];
+        }, {name: 'book 3', price: 250.78, author: 'x'}];
 
     const [books, setBooks] = useState(bookList);
     const [formVisible, setFormVisibility] = useState<false | true>(false);
@@ -38,8 +38,8 @@ const Books: React.FC<BooksProps> = (props) => {
         setBookToUpdateIndex(null);
     }
 
-    const handleBookAdded = (name: string, isbn: string, author: string) => {
-        const newBook: IBooks = {name, isbn, author};
+    const handleBookAdded = (name: string, price: number, author: string) => {
+        const newBook: IBooks = {name, price, author};
         setBooks([...books, newBook]);
         addToast("New Book Created", {appearance: 'success', autoDismiss: true});
     }

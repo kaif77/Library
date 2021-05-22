@@ -9,7 +9,7 @@ import {useToasts} from "react-toast-notifications";
 type BooksProps = {
     authors: IAuthors[]
     handleOnFormClose: () => void
-    onBookAdded: (name: string, isbn: string, author: string) => void
+    onBookAdded: (name: string, price: number, author: string) => void
     bookToUpdate: IBooks | null
     onBookUpdated: (bookUpdated: IBooks) => void
 }
@@ -21,15 +21,15 @@ const CreateBook: React.FC<BooksProps> = (props) => {
             return {value: author.name, label: author.name}
         });
     const [name, setName] = useState<string | null>(null);
-    const [isbn, setIsbn] = useState<string | null>(null);
+    const [price, setPrice] = useState<number | null>(null);
     const [inputAuthor, setAuthor] = useState<null | AuthorsInDropDown>(null);
     const {addToast} = useToasts();
 
     const handleOnBookNameChanged = (name: string) => {
         setName(name);
     }
-    const handleOnIsbnChanged = (isbn: string) => {
-        setIsbn(isbn);
+    const handleOnPriceChanged = (price: string) => {
+        setPrice(Number(price));
     }
     const handleOnAuthorChanged = (author: null | AuthorsInDropDown) => {
         setAuthor(author);
@@ -37,12 +37,12 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        if (!name || name === "" || !isbn || isbn === "" || !inputAuthor) {
+        if (!name || name === "" || !price || price === 0 || !inputAuthor) {
             if (!name || name === "") {
                 addToast('Book Name is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
-            if (!isbn || isbn === "") {
-                addToast('ISBN is Not Valid', {appearance: 'warning', autoDismiss: true});
+            if (!price || price === 0) {
+                addToast('Price is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
             if (!inputAuthor) {
                 addToast('Author Name is Not Valid', {appearance: 'warning', autoDismiss: true});
@@ -50,25 +50,25 @@ const CreateBook: React.FC<BooksProps> = (props) => {
             return;
         }
         if (props.bookToUpdate) {
-            const updatedBook: IBooks = {...props.bookToUpdate, name: name, isbn: isbn, author: inputAuthor.value};
+            const updatedBook: IBooks = {...props.bookToUpdate, name: name, price: price, author: inputAuthor.value};
             props.onBookUpdated(updatedBook);
             return;
         }
-        props.onBookAdded(name, isbn, inputAuthor.value);
+        props.onBookAdded(name, price, inputAuthor.value);
         setName('');
-        setIsbn('');
+        setPrice(null);
         setAuthor(null);
     }
 
     useEffect(() => {
         if (!props.bookToUpdate) {
             setName('');
-            setIsbn('');
+            setPrice(null);
             setAuthor(null);
             return;
         }
         setName(props.bookToUpdate.name);
-        setIsbn(props.bookToUpdate.isbn);
+        setPrice(props.bookToUpdate.price);
         const goingToUpdateAuthor: AuthorsInDropDown = {
             value: props.bookToUpdate.author,
             label: props.bookToUpdate.author
@@ -77,7 +77,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     }, [props.bookToUpdate])
 
     return (
-        <Row className='create-book mx-3 my-4'>
+        <Row className='create-book mx-3 my-5'>
             <Col xs={12} md={10} lg={8}>
                 <Row>
                     <Col xs={10}>
@@ -88,7 +88,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className='my-4'>
+                    <Col className='my-3'>
                         <Form className='formInputs' onSubmit={handleOnSubmit}>
                             <Form.Group controlId="bookName">
                                 <Form.Label>Title of the Book</Form.Label>
@@ -99,13 +99,13 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                                   handleOnBookNameChanged(event.target.value)}
                                 />
                             </Form.Group>
-                            <Form.Group controlId="isbn">
-                                <Form.Label>ISBN</Form.Label>
-                                <Form.Control type="text"
-                                              value={isbn ? isbn : ''}
+                            <Form.Group controlId="price">
+                                <Form.Label>Price</Form.Label>
+                                <Form.Control type="number"
+                                              value={price ? price : ''}
                                               placeholder=""
                                               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                                                  handleOnIsbnChanged(event.target.value)}
+                                                  handleOnPriceChanged(event.target.value)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="authorName">
