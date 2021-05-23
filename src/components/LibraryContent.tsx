@@ -14,6 +14,8 @@ const LibraryContent: React.FC = () => {
     const {addToast} = useToasts();
 
     const handleOnClickAddAuthor = () => {
+        setAuthorToUpdate(null);
+        setAuthorToUpdateIndex(null);
         setFormVisibility(true);
     }
     useEffect(() => {
