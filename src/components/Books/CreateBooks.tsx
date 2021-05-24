@@ -84,7 +84,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
 
     return (
         <Row className='create-book mx-3 my-5'>
-            <Col xs={12} md={11} lg={8}>
+            <Col xs={12} md={11} lg={10}>
                 <Row>
                     <Col xs={10}>
                         <h3>{props.bookToUpdate ? "Update Book" : "Create Book"}</h3>
@@ -152,7 +152,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                 />
                             </Form.Group>
                             <Button type="submit"
-                                    className='create-btn mt-3 py-1 px-4'>{props.bookToUpdate ? "Update" : "Create"}
+                                    className='create-btn mt-4 py-1 px-4'>{props.bookToUpdate ? "Update" : "Create"}
                             </Button>
                         </Form>
                     </Col>
