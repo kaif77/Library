@@ -55,8 +55,8 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
     }
 
     return (
-        <Row className='create-author mx-3 my-4'>
-            <Col xs={12} md={10} lg={8}>
+        <Row className='create-author mx-3 my-5'>
+            <Col xs={12} md={11} lg={8}>
                 <Row>
 
                     <Col xs={10}>
@@ -71,7 +71,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
 
                 <Row>
 
-                    <Col className='my-4'>
+                    <Col className='my-3'>
                         <Form className='formInputs'  onSubmit={handleOnSubmit}>
                             <Form.Group controlId="authorName">
                                 <Form.Label>Name of Author</Form.Label>
