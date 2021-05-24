@@ -122,6 +122,9 @@ $extra-small-device-size: 576px;
       }
 
       .create-book {
+        .formInputs {
+          margin-left: 0;
+        }
 
         .form-label {
           font-size: 0.9em;
