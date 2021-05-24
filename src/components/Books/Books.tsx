@@ -81,19 +81,16 @@ const Books: React.FC<BooksProps> = (props) => {
     }, [bookToUpdate]);
 
     const handleUpdatedBook = (updatedBook: IBooks) => {
-        const userConfirmation = window.confirm("Update Book?");
         const allBooks: IBooks[] = books.slice();
         if (bookToUpdateIndex === null) {
             return;
         }
-        if (userConfirmation === true) {
             allBooks.splice(bookToUpdateIndex, 1, updatedBook);
             setBooks(allBooks);
             addToast("Book Updated", {appearance: 'success', autoDismiss: true});
             setBookToUpdate(null);
             setBookToUpdateIndex(null);
             setFormVisibility(false);
-        }
     }
     return (
         <div>

@@ -21,6 +21,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
 
     useEffect(() => {
         if (!authorToUpdate) {
+            setAuthorName('');
             return;
         }
         setAuthorName(authorToUpdate.name);
@@ -40,14 +41,11 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         }
 
         if (authorToUpdate) {
-            const userConfirmation = window.confirm("Update Author Name?");
-            if (userConfirmation === true) {
                 const updatedAuthor: IAuthors = {...authorToUpdate, name: authorName}
                 props.onAuthorUpdated(updatedAuthor);
                 setAuthorName('');
                 addToast("Author Updated", {appearance: 'success', autoDismiss: true});
-            }
-            return;
+                return;
         }
 
         const newAuthor: IAuthors = {name: authorName};
