@@ -13,9 +13,7 @@ type createAuthorProps = {
 
 const CreateAuthor: React.FC<createAuthorProps> = (props) => {
     const {authorToUpdate} = props
-
     const [authorName, setAuthorName] = useState<string | null>(null)
-
     const {addToast} = useToasts();
 
 
@@ -41,11 +39,11 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         }
 
         if (authorToUpdate) {
-                const updatedAuthor: IAuthors = {...authorToUpdate, name: authorName}
-                props.onAuthorUpdated(updatedAuthor);
-                setAuthorName('');
-                addToast("Author Updated", {appearance: 'success', autoDismiss: true});
-                return;
+            const updatedAuthor: IAuthors = {...authorToUpdate, name: authorName}
+            props.onAuthorUpdated(updatedAuthor);
+            setAuthorName('');
+            addToast("Author Updated", {appearance: 'success', autoDismiss: true});
+            return;
         }
 
         const newAuthor: IAuthors = {name: authorName};
@@ -56,23 +54,19 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
 
     return (
         <Row className='create-author mx-3 my-5'>
-            <Col xs={12} md={11} lg={8}>
+            <Col xs={12} md={11} lg={10}>
                 <Row>
-
                     <Col xs={10}>
                         <h3>{authorToUpdate ? 'Update' : 'Create'} Author</h3>
                     </Col>
-
                     <Col xs={2} className='formCloseButton'>
-                        <i><XCircle  onClick={props.onFormClose}/></i>
+                        <i><XCircle onClick={props.onFormClose}/></i>
                     </Col>
-
                 </Row>
 
                 <Row>
-
                     <Col className='my-3'>
-                        <Form className='formInputs'  onSubmit={handleOnSubmit}>
+                        <Form className='formInputs' onSubmit={handleOnSubmit}>
                             <Form.Group controlId="authorName">
                                 <Form.Label>Name of Author</Form.Label>
                                 <Form.Control type="text" placeholder=""
@@ -81,16 +75,13 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
                                                   handleOnAuthorNameChanged(event.target.value)}
                                 />
                             </Form.Group>
-                            <Button className='create-btn mt-3 py-1 px-4' type='submit'>
+                            <Button className='create-btn mt-4 py-1 px-4' type='submit'>
                                 {authorToUpdate ? 'Update' : 'Create'}
                             </Button>
                         </Form>
                     </Col>
-
                 </Row>
-
             </Col>
-
         </Row>
     );
 }

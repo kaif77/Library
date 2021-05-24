@@ -85,12 +85,12 @@ const Books: React.FC<BooksProps> = (props) => {
         if (bookToUpdateIndex === null) {
             return;
         }
-            allBooks.splice(bookToUpdateIndex, 1, updatedBook);
-            setBooks(allBooks);
-            addToast("Book Updated", {appearance: 'success', autoDismiss: true});
-            setBookToUpdate(null);
-            setBookToUpdateIndex(null);
-            setFormVisibility(false);
+        allBooks.splice(bookToUpdateIndex, 1, updatedBook);
+        setBooks(allBooks);
+        addToast("Book Updated", {appearance: 'success', autoDismiss: true});
+        setBookToUpdate(null);
+        setBookToUpdateIndex(null);
+        setFormVisibility(false);
     }
     return (
         <div>
