@@ -13,9 +13,7 @@ type createAuthorProps = {
 
 const CreateAuthor: React.FC<createAuthorProps> = (props) => {
     const {authorToUpdate} = props
-
     const [authorName, setAuthorName] = useState<string | null>(null)
-
     const {addToast} = useToasts();
 
 
@@ -58,19 +56,15 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         <Row className='create-author mx-3 my-4'>
             <Col xs={12} md={10} lg={8}>
                 <Row>
-
                     <Col xs={10}>
                         <h3>{authorToUpdate ? 'Update' : 'Create'} Author</h3>
                     </Col>
-
                     <Col xs={2} className='formCloseButton'>
                         <i><XCircle  onClick={props.onFormClose}/></i>
                     </Col>
-
                 </Row>
 
                 <Row>
-
                     <Col className='my-4'>
                         <Form className='formInputs'  onSubmit={handleOnSubmit}>
                             <Form.Group controlId="authorName">
@@ -86,11 +80,8 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
                             </Button>
                         </Form>
                     </Col>
-
                 </Row>
-
             </Col>
-
         </Row>
     );
 }
