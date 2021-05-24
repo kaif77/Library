@@ -43,11 +43,11 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        if (!name || name === "" || !price || price === 0 || !inputAuthor) {
+        if (!name || name === "" || !price || price <= 0 || !inputAuthor) {
             if (!name || name === "") {
                 addToast('Book Name is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
-            if (!price || price === 0) {
+            if (!price || price <= 0) {
                 addToast('Price is Not Valid', {appearance: 'warning', autoDismiss: true});
             }
             if (!inputAuthor) {
