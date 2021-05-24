@@ -4,6 +4,7 @@ import {XCircle} from "react-feather";
 import Select from 'react-select/creatable';
 import {IAuthors, AuthorsInDropDown, IBooks} from "../../types/LibraryTypes";
 import {useToasts} from "react-toast-notifications";
+import NumberFormat from 'react-number-format';
 
 
 type BooksProps = {
@@ -28,8 +29,13 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnBookNameChanged = (name: string) => {
         setName(name);
     }
-    const handleOnPriceChanged = (price: string) => {
-        setPrice(Number(price));
+    const handleOnPriceChanged = (price: number | undefined) => {
+        if (price === undefined) {
+            setPrice(null);
+        } else if (price) {
+            setPrice(price);
+        }
+
     }
     const handleOnAuthorChanged = (author: null | AuthorsInDropDown) => {
         setAuthor(author);
@@ -78,7 +84,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
 
     return (
         <Row className='create-book mx-3 my-5'>
-            <Col xs={12} md={10} lg={8}>
+            <Col xs={12} md={11} lg={8}>
                 <Row>
                     <Col xs={10}>
                         <h3>{props.bookToUpdate ? "Update Book" : "Create Book"}</h3>
@@ -101,17 +107,19 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                             </Form.Group>
                             <Form.Group controlId="price">
                                 <Form.Label>Price</Form.Label>
-                                <Form.Control type="number"
+                                <NumberFormat thousandSeparator={true}
+                                              className='form-control'
+                                              prefix={'$'}
                                               value={price ? price : ''}
                                               placeholder=""
-                                              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                                                  handleOnPriceChanged(event.target.value)}
+                                              onValueChange={(values) => {
+                                                  handleOnPriceChanged(values.floatValue)
+                                              }}
                                 />
                             </Form.Group>
                             <Form.Group controlId="authorName">
                                 <Form.Label>Author</Form.Label>
                                 <Select
-
                                     value={inputAuthor}
                                     onChange={(selected: AuthorsInDropDown | null) => {
                                         handleOnAuthorChanged(selected)
