@@ -85,7 +85,7 @@
 
       .create-btn {
         background-color: $create-btn-color;
-        border-radius: 6px;
+        border-radius: 8px;
         float: right;
         font-size: 1.1em;
       }
@@ -98,6 +98,11 @@
       .formCloseButton {
         text-align: right;
 
+      }
+      .select-invalid{
+        font-size: 0.9rem;
+        padding-top: 5px;
+        color: #dc3545;
       }
     }
   }
@@ -123,6 +128,9 @@
 
         .form-label {
           font-size: 0.9em;
+        }
+        .select-invalid{
+          font-size: 0.7rem;
         }
       }
     }

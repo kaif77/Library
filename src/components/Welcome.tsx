@@ -13,9 +13,9 @@ const Welcome: React.FC = () => {
             </Col>
             <Col xs={12} className='img-credit'>
                 Photo by <a
-                href="https://unsplash.com/@annahunko?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                href="https://unsplash.com/@annahunko?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer" target="_blank">
                 Anna Hunko</a> on <a
-                href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer" target="_blank">
                 Unsplash</a>
             </Col>
         </Row>
