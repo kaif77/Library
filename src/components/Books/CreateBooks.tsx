@@ -1,9 +1,8 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {XCircle} from "react-feather";
 import Select from 'react-select/creatable';
 import {IAuthors, AuthorsInDropDown, IBooks} from "../../types/LibraryTypes";
-import {useToasts} from "react-toast-notifications";
 import NumberFormat from 'react-number-format';
 
 
@@ -24,7 +23,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const [name, setName] = useState<string | null>(null);
     const [price, setPrice] = useState<number | null>(null);
     const [inputAuthor, setAuthor] = useState<null | AuthorsInDropDown>(null);
-    const {addToast} = useToasts();
+    const [validated, setValidated] = useState(false);
 
     const handleOnBookNameChanged = (name: string) => {
         setName(name);
@@ -40,19 +39,16 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnAuthorChanged = (author: null | AuthorsInDropDown) => {
         setAuthor(author);
     }
-    const handleOnSubmit = (event: FormEvent) => {
+    const handleOnSubmit = (event: any) => {
         event.preventDefault();
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        }
+
+        setValidated(true);
 
         if (!name || name === "" || !price || price <= 0 || !inputAuthor) {
-            if (!name || name === "") {
-                addToast('Book Name is Not Valid', {appearance: 'warning', autoDismiss: true});
-            }
-            if (!price || price <= 0) {
-                addToast('Price is Not Valid', {appearance: 'warning', autoDismiss: true});
-            }
-            if (!inputAuthor) {
-                addToast('Author Name is Not Valid', {appearance: 'warning', autoDismiss: true});
-            }
             return;
         }
         if (props.bookToUpdate) {
@@ -61,6 +57,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
             return;
         }
         props.onBookAdded(name, price, inputAuthor.value);
+        setValidated(false);
         setName('');
         setPrice(null);
         setAuthor(null);
@@ -95,20 +92,25 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                 </Row>
                 <Row>
                     <Col className='my-3'>
-                        <Form className='formInputs' onSubmit={handleOnSubmit}>
+                        <Form className='formInputs' noValidate validated={validated} onSubmit={handleOnSubmit}>
                             <Form.Group controlId="bookName">
                                 <Form.Label>Title of the Book</Form.Label>
                                 <Form.Control type="text"
                                               placeholder=""
+                                              required
                                               value={name ? name : ''}
                                               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                                                   handleOnBookNameChanged(event.target.value)}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid Book Name.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="price">
                                 <Form.Label>Price</Form.Label>
                                 <NumberFormat thousandSeparator={true}
                                               className='form-control'
+                                              required
                                               prefix={'$'}
                                               value={price ? price : ''}
                                               placeholder=""
@@ -116,41 +118,49 @@ const CreateBook: React.FC<BooksProps> = (props) => {
                                                   handleOnPriceChanged(values.floatValue)
                                               }}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid Price.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="authorName">
                                 <Form.Label>Author</Form.Label>
-                                <Select
-                                    value={inputAuthor}
-                                    onChange={(selected: AuthorsInDropDown | null) => {
-                                        handleOnAuthorChanged(selected)
-                                    }}
-                                    allowCreateWhileLoading
-                                    options={authorsOfOptionList}
-                                    isClearable={true}
-                                    isSearchable={false}
-                                    theme={theme => ({
-                                        ...theme,
-                                        borderRadius: 0,
-                                        borderWidth: 2,
-                                        colors: {
-                                            ...theme.colors,
-                                            primary25: '#f5f5f5',
-                                            primary: '#989898',
-                                        },
-                                    })}
-                                    styles={{
-                                        container: base => ({
-                                            ...base,
-                                            backgroundColor: '#989898',
-                                            padding: 2,
-                                        }),
-                                        control: base => ({
-                                            ...base,
-                                            border: 0,
-                                        }),
-                                    }}
-                                />
+                                    <Select
+                                        value={inputAuthor}
+                                        onChange={(selected: AuthorsInDropDown | null) => {
+                                            handleOnAuthorChanged(selected)
+                                        }}
+                                        allowCreateWhileLoading
+                                        options={authorsOfOptionList}
+                                        isClearable={true}
+                                        isSearchable={false}
+                                        theme={theme => ({
+                                            ...theme,
+                                            borderRadius: 0,
+                                            borderWidth: 2,
+                                            colors: {
+                                                ...theme.colors,
+                                                primary25: '#f5f5f5',
+                                                primary: '#989898',
+                                            },
+                                        })}
+                                        styles={{
+                                            container: base => ({
+                                                ...base,
+                                                backgroundColor: '#989898',
+                                                padding: 2,
+                                            }),
+                                            control: base => ({
+                                                ...base,
+                                                border: 0,
+
+                                            }),
+                                        }}
+                                    />
                             </Form.Group>
+                            {(!inputAuthor && validated===true) &&
+                            <span className='select-invalid'>
+                                Please select an Author.
+                            </span> }
                             <Button type="submit"
                                     className='create-btn mt-4 py-1 px-4'>{props.bookToUpdate ? "Update" : "Create"}
                             </Button>

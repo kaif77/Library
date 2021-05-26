@@ -23,6 +23,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
             return;
         }
         setAuthorName(authorToUpdate.name);
+        setValidated(false);
     }, [authorToUpdate])
 
 
@@ -31,9 +32,9 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
     }
 
     const handleOnSubmit = (event:any) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
 
@@ -52,7 +53,8 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         }
 
         const newAuthor: IAuthors = {name: authorName};
-        props.onAuthorAdded(newAuthor)
+        props.onAuthorAdded(newAuthor);
+        setValidated(false);
         addToast("New Author Created", {appearance: 'success', autoDismiss: true});
         setAuthorName('');
     }
