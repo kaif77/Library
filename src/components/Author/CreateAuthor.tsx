@@ -5,10 +5,10 @@ import {IAuthors} from "../../types/LibraryTypes";
 import {useToasts} from "react-toast-notifications";
 
 type createAuthorProps = {
-    onFormClose: () => void;
-    onAuthorAdded: (author: IAuthors) => void;
+    onFormClose: () => void
+    onAuthorAdded: (author: IAuthors) => void
     authorToUpdate: IAuthors | null
-    onAuthorUpdated: (updatedAuthor: IAuthors) => void;
+    onAuthorUpdated: (updatedAuthor: IAuthors) => void
 }
 
 const CreateAuthor: React.FC<createAuthorProps> = (props) => {
@@ -25,7 +25,6 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         setAuthorName(authorToUpdate.name);
         setValidated(false);
     }, [authorToUpdate])
-
 
     const handleOnAuthorNameChanged = (name: string) => {
         setAuthorName(name);

@@ -1,11 +1,17 @@
 import {Col, Row} from "react-bootstrap";
 import Authors from "./Author/Authors";
-import {IAuthors} from "../types/LibraryTypes";
+import {IAuthors, IBooks} from "../types/LibraryTypes";
 import React, {useEffect, useState} from "react";
 import Books from "./Books/Books";
 import {useToasts} from "react-toast-notifications";
 
 const LibraryContent: React.FC = () => {
+    const bookList: IBooks[] = [
+        {name: 'book 1', price: 250.78, author: 'z'},
+        {name: 'book 2', price: 250.78, author: 'y'},
+        {name: 'book 3', price: 250.78, author: 'x'}
+    ];
+    const [books, setBooks] = useState(bookList);
     const authorsList: IAuthors [] = [{name: 'Author 1'}, {name: 'Author 2'}, {name: 'Author 3'}];
     const [authors, setAuthors] = useState(authorsList);
     const [authorToUpdate, setAuthorToUpdate] = useState<IAuthors | null>(null);
@@ -27,6 +33,11 @@ const LibraryContent: React.FC = () => {
 
     const handleOnAuthorDeleted = (index: number) => {
         const allAuthors: IAuthors[] = authors.slice();
+        const bAuthors: String[] = books.map(b => b.author);
+        if (bAuthors.includes(allAuthors[index].name)) {
+            addToast("Author has been assigned to a book and cannot be Deleted", {appearance: 'error', autoDismiss: true});
+            return;
+        }
         const userConfirmation = window.confirm("Delete Author?");
         if (userConfirmation === true) {
             allAuthors.splice(index, 1);
@@ -68,7 +79,9 @@ const LibraryContent: React.FC = () => {
     return (
         <Row className='library-content'>
             <Col xs={{span: 12, order: 2}} md={{span: 6, order: 1}} className='bookSection'>
-                <Books authors={authors}/>
+                <Books authors={authors}
+                       books={books}
+                       setBooks={setBooks}/>
             </Col>
 
 

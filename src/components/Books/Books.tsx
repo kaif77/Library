@@ -8,17 +8,12 @@ import {useToasts} from "react-toast-notifications";
 
 type BooksProps = {
     authors: IAuthors[]
+    books: IBooks[]
+    setBooks:(books: IBooks[]) => void
 }
 
 const Books: React.FC<BooksProps> = (props) => {
-    const bookList: IBooks[] = [{name: 'book 1', price: 250.78, author: 'z'},
-        {
-            name: 'book 2',
-            price: 250.78,
-            author: 'y'
-        }, {name: 'book 3', price: 250.78, author: 'x'}];
-
-    const [books, setBooks] = useState(bookList);
+    const {setBooks, books} = props;
     const [formVisible, setFormVisibility] = useState<false | true>(false);
     const [bookToUpdate, setBookToUpdate] = useState<IBooks | null>(null);
     const [bookToUpdateIndex, setBookToUpdateIndex] = useState<number | null>(null);
