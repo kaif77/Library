@@ -10,11 +10,11 @@ type AuthorsProps = {
     onAuthorDeleted: (authorIndex: number) => void
     onUpdateRequest: (authorIndex: number) => void
     onClickAddAuthor: () => void
-    onAuthorUpdated: (updatedAuthor: IAuthors) => void;
+    onAuthorUpdated: (updatedAuthor: IAuthors) => void
     authorToUpdate: IAuthors | null
     formVisible: boolean
-    onAuthorAdded: (author: IAuthors) => void;
-    onFormClose: () => void;
+    onAuthorAdded: (author: IAuthors) => void
+    onFormClose: () => void
 }
 
 const Authors: React.FC<AuthorsProps> = (props) => {
