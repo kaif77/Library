@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {XCircle} from "react-feather";
 import {IAuthors} from "../../types/LibraryTypes";
@@ -15,7 +15,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
     const {authorToUpdate} = props
     const [authorName, setAuthorName] = useState<string | null>(null)
     const {addToast} = useToasts();
-
+    const [validated, setValidated] = useState(false);
 
     useEffect(() => {
         if (!authorToUpdate) {
@@ -30,11 +30,16 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         setAuthorName(name);
     }
 
-    const handleOnSubmit = (event: FormEvent) => {
-        event.preventDefault();
+    const handleOnSubmit = (event:any) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        setValidated(true);
 
         if (!authorName || authorName === '') {
-            addToast('Author Name is Not Valid', {appearance: 'warning', autoDismiss: true});
             return;
         }
 
@@ -66,14 +71,18 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
 
                 <Row>
                     <Col className='my-3'>
-                        <Form className='formInputs' onSubmit={handleOnSubmit}>
+                        <Form className='formInputs'  noValidate validated={validated} onSubmit={handleOnSubmit}>
                             <Form.Group controlId="authorName">
                                 <Form.Label>Name of Author</Form.Label>
                                 <Form.Control type="text" placeholder=""
+                                              required
                                               value={authorName ? authorName : ''}
                                               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                                                   handleOnAuthorNameChanged(event.target.value)}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid Author Name.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Button className='create-btn mt-4 py-1 px-4' type='submit'>
                                 {authorToUpdate ? 'Update' : 'Create'}
