@@ -94,7 +94,6 @@ const Books: React.FC<BooksProps> = (props) => {
             <BooksList bookList={books}
                        onBookDeleted={deleteBook}
                        onUpdateRequest={HandleOnUpdateRequest}
-
             />
             <AddBook handleOnFormOpen={handleOnFormOpen}/>
             {formVisible && <CreateBooks authors={props.authors}
