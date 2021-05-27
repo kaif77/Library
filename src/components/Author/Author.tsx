@@ -19,7 +19,6 @@ const Author: React.FC<AuthorProps> = (props) => {
                 <Col xs={8}>
                     <label>{index}. {author.name}</label>
                 </Col>
-
                 <Col xs={4} className='author-icons'>
                     <i onClick={() => props.onUpdateRequest(index - 1)}> <Edit className='text-warning'/> </i>
                     <i onClick={() => props.onAuthorDeleted(index - 1)}> <Trash2 className='text-danger mx-2'/> </i>
