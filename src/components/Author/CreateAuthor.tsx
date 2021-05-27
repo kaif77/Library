@@ -12,8 +12,8 @@ type createAuthorProps = {
 }
 
 const CreateAuthor: React.FC<createAuthorProps> = (props) => {
-    const {authorToUpdate} = props
-    const [authorName, setAuthorName] = useState<string | null>(null)
+    const {authorToUpdate} = props;
+    const [authorName, setAuthorName] = useState<string | null>(null);
     const {addToast} = useToasts();
     const [validated, setValidated] = useState(false);
 
@@ -24,7 +24,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         }
         setAuthorName(authorToUpdate.name);
         setValidated(false);
-    }, [authorToUpdate])
+    }, [authorToUpdate]);
 
     const handleOnAuthorNameChanged = (name: string) => {
         setAuthorName(name);
@@ -44,7 +44,7 @@ const CreateAuthor: React.FC<createAuthorProps> = (props) => {
         }
 
         if (authorToUpdate) {
-            const updatedAuthor: IAuthors = {...authorToUpdate, name: authorName}
+            const updatedAuthor: IAuthors = {...authorToUpdate, name: authorName};
             props.onAuthorUpdated(updatedAuthor);
             setAuthorName('');
             addToast("Author Updated", {appearance: 'success', autoDismiss: true});

@@ -15,7 +15,6 @@ type BooksProps = {
 }
 const CreateBook: React.FC<BooksProps> = (props) => {
     const {authors} = props;
-
     const authorsOfOptionList: AuthorsInDropDown[] = authors.map(
         (author) => {
             return {value: author.name, label: author.name}
@@ -28,24 +27,25 @@ const CreateBook: React.FC<BooksProps> = (props) => {
     const handleOnBookNameChanged = (name: string) => {
         setName(name);
     }
+
     const handleOnPriceChanged = (price: number | undefined) => {
         if (price === undefined) {
             setPrice(null);
         } else if (price) {
             setPrice(price);
         }
-
     }
+
     const handleOnAuthorChanged = (author: null | AuthorsInDropDown) => {
         setAuthor(author);
     }
+
     const handleOnSubmit = (event: any) => {
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.stopPropagation();
         }
-
         setValidated(true);
 
         if (!name || name === "" || !price || price <= 0 || !inputAuthor) {
@@ -77,7 +77,7 @@ const CreateBook: React.FC<BooksProps> = (props) => {
             label: props.bookToUpdate.author
         }
         setAuthor(goingToUpdateAuthor);
-    }, [props.bookToUpdate])
+    }, [props.bookToUpdate]);
 
     return (
         <Row className='create-book mx-3 my-5'>
