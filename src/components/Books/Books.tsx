@@ -58,7 +58,6 @@ const Books: React.FC<BooksProps> = (props) => {
                 setBookToUpdateIndex(null);
                 setBookToUpdate(null);
                 setFormVisibility(false);
-
             }
         }
     }
@@ -87,6 +86,7 @@ const Books: React.FC<BooksProps> = (props) => {
         setBookToUpdateIndex(null);
         setFormVisibility(false);
     }
+
     return (
         <div>
             <BookTitle/>
