@@ -49,6 +49,7 @@ const Authors: React.FC<AuthorsProps> = (props) => {
             if (authorToUpdateIndex) {
                 if (authorToUpdateIndex > index) {
                     setAuthorToUpdateIndex(authorToUpdateIndex - 1);
+
                 }else if (authorToUpdateIndex === index) {
                     setAuthorToUpdateIndex(null);
                     setAuthorToUpdate(null);

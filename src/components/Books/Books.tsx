@@ -9,7 +9,7 @@ import {useToasts} from "react-toast-notifications";
 type BooksProps = {
     authors: IAuthors[]
     books: IBooks[]
-    setBooks:(books: IBooks[]) => void
+    setBooks: (books: IBooks[]) => void
 }
 
 const Books: React.FC<BooksProps> = (props) => {
@@ -39,11 +39,8 @@ const Books: React.FC<BooksProps> = (props) => {
         addToast("New Book Created", {appearance: 'success', autoDismiss: true});
     }
 
-    const deleteBook = (index: number | null) => {
+    const deleteBook = (index: number) => {
         const userConfirmation = window.confirm("Delete Book?");
-        if (index === null) {
-            return;
-        }
         if (userConfirmation === true) {
             const allBooks: IBooks[] = books.slice();
             allBooks.splice(index, 1);
@@ -52,12 +49,12 @@ const Books: React.FC<BooksProps> = (props) => {
             if (bookToUpdateIndex) {
                 if (bookToUpdateIndex > index) {
                     setBookToUpdateIndex(bookToUpdateIndex - 1);
+
+                } else if (bookToUpdateIndex === index) {
+                    setBookToUpdateIndex(null);
+                    setBookToUpdate(null);
+                    setFormVisibility(false);
                 }
-            }
-            if (bookToUpdateIndex === index) {
-                setBookToUpdateIndex(null);
-                setBookToUpdate(null);
-                setFormVisibility(false);
             }
         }
     }
