@@ -46,6 +46,15 @@ const Authors: React.FC<AuthorsProps> = (props) => {
             allAuthors.splice(index, 1);
             setAuthors(allAuthors);
             addToast("Author Deleted", {appearance: 'info', autoDismiss: true});
+            if (authorToUpdateIndex) {
+                if (authorToUpdateIndex > index) {
+                    setAuthorToUpdateIndex(authorToUpdateIndex - 1);
+                }else if (authorToUpdateIndex === index) {
+                    setAuthorToUpdateIndex(null);
+                    setAuthorToUpdate(null);
+                    setFormVisibility(false);
+                }
+            }
         }
     };
 
