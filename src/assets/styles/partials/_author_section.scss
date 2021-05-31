@@ -3,7 +3,7 @@
 .library-content {
   min-height: 100vh;
 
-  .authorSection {
+  .author-section {
     padding: 0 2em 0 3em;
 
     .author-title {
@@ -102,7 +102,7 @@
 
 @media only screen and (max-width: $extra-small-device-size) {
   .library-content {
-    .authorSection {
+    .author-section {
       font-size: 0.8em;
       padding: 0 1em 0 1em;
 

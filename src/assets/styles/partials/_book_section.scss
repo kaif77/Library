@@ -3,7 +3,7 @@
 .library-content {
   min-height: 100vh;
 
-  .bookSection {
+  .book-section {
     padding: 0 3em 0 2em;
 
     .book-title {
@@ -100,7 +100,8 @@
         text-align: right;
 
       }
-      .select-invalid{
+
+      .select-invalid {
         font-size: 0.9rem;
         padding-top: 5px;
         color: #dc3545;
@@ -114,7 +115,7 @@
   .library-content {
     min-height: 0;
 
-    .bookSection {
+    .book-section {
       font-size: 0.8em;
       padding: 0 1em 0 1em;
 
@@ -130,7 +131,8 @@
         .form-label {
           font-size: 0.9em;
         }
-        .select-invalid{
+
+        .select-invalid {
           font-size: 0.7rem;
         }
       }

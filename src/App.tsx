@@ -3,12 +3,7 @@ import Client from "./Client";
 import './App.scss';
 
 const App: React.FC = () => {
-    return (
-        <div>
-            <Client/>
-        </div>
-
-    );
+  return <Client/>
 };
 
 export default App;
