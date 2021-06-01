@@ -4,37 +4,37 @@ import Author from "./Author";
 import {IAuthors} from "../../types/LibraryTypes";
 
 type AuthorsListProps = {
-    authors: IAuthors[]
-    onAuthorDeleted: (authorIndex: number) => void
-    onUpdateRequest: (authorIndex: number) => void
+  authors: IAuthors[]
+  onAuthorDeleted: (authorIndex: number) => void
+  onUpdateRequest: (authorIndex: number) => void
 }
 
 const AuthorList: React.FC<AuthorsListProps> = (props) => {
-    const {authors} = props;
+  const {authors} = props;
 
-    const renderAuthorList = () => {
-        if (authors.length === 0) {
-            return;
-        }
-        return authors.map((author: IAuthors, index: number) => {
-            return <Author author={author} key={index} index={index + 1}
-                           onAuthorDeleted={props.onAuthorDeleted}
-                           onUpdateRequest={props.onUpdateRequest}
-            />
-        });
-    };
+  const renderAuthorList = () => {
+    if (authors.length === 0) {
+      return;
+    }
+    return authors.map((author: IAuthors, index: number) => {
+      return <Author author={author} key={index} index={index + 1}
+                     onAuthorDeleted={props.onAuthorDeleted}
+                     onUpdateRequest={props.onUpdateRequest}
+      />
+    });
+  };
 
-    return (
-        <Row>
-            <Col>
-                {authors.length === 0 && <label className='empty-list mb-2'>No authors listed here</label>}
-            </Col>
+  return (
+      <Row>
+        <Col>
+          {authors.length === 0 && <label className='empty-list mb-2'>No authors listed here</label>}
+        </Col>
 
-            <ul className='author-ul'>
-                {renderAuthorList()}
-            </ul>
-        </Row>
-    );
+        <ul className='author-ul'>
+          {renderAuthorList()}
+        </ul>
+      </Row>
+  );
 }
 
 export default AuthorList;

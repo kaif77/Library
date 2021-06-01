@@ -1,15 +1,16 @@
-$extra-small-device-size:576px;
-.welcome-section{
-  h1{
+$extra-small-device-size: 576px;
+.welcome-section {
+  h1 {
     font-weight: 700;
     font-size: 3em;
   }
 
-  img{
+  img {
     width: 100%;
     height: auto;
   }
-  .img-credit{
+
+  .img-credit {
     text-align: right;
     padding-top: 3px;
     padding-right: 5px;
@@ -17,10 +18,11 @@ $extra-small-device-size:576px;
     font-size: 1.2em;
   }
 }
-@media only screen and (max-width:$extra-small-device-size) {
-  .welcome-section{
-    .img-credit{
-    font-size: 0.7em;
-      }
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .welcome-section {
+    .img-credit {
+      font-size: 0.7em;
+    }
   }
 }
