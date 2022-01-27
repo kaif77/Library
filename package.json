@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -11,10 +12,19 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "bootstrap": "^5.0.0",
+    "feather-icons-react": "^0.4.3",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
+    "react-feather": "^2.0.9",
+    "react-number-format": "^4.5.5",
     "react-scripts": "4.0.3",
+    "react-select": "^4.3.1",
+    "react-toast": "^1.0.3",
+    "react-toast-notifications": "^2.4.4",
+    "sass": "^1.32.12",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
@@ -43,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-select": "^4.0.15"
     "@types/node-sass": "^4.11.1"
   }
 }
